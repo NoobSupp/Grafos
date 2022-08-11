@@ -11,5 +11,7 @@ public class Main {
         System.out.println(g1);
         g1.addEdge(0, 2 , 3);
         System.out.println(g1.degreee(0));
+        g1.addEdge(1, 2 , 3);
+        System.out.println(g1.highestDegree());
     }
 }

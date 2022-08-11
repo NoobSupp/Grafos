@@ -46,4 +46,12 @@ public class Graph {
         }
         return conta;
     }
+    public int highestDegree(){
+        int maior = this.degreee(0);
+        for(int i = 0; i< this.adjmatrix.length; i++){
+            if(this.degreee(i) > maior)
+            maior = this.degreee(i);
+        }
+        return maior;
+    }
 }
