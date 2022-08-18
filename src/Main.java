@@ -1,17 +1,18 @@
 
 public class Main {
     public static void main(String[] args) {
-        String a = "aaaaaaaaaa";
-        System.out.println(a);
+
         Graph g1 = new Graph(4);
         System.out.println(g1);
-        g1.toString();
-        g1.addEdge(0, 1 , 3);
-        g1.toString();
+        g1.addEdge(0, 1, 1);
+        g1.addEdge(1, 0, 1);
+        g1.addEdge(2, 3, 1);
+        g1.addEdge(3, 2, 1);
         System.out.println(g1);
-        g1.addEdge(0, 2 , 3);
-        System.out.println(g1.degreee(0));
-        g1.addEdge(1, 2 , 3);
-        System.out.println(g1.highestDegree());
+        if(g1.oriented()){
+            System.out.println("não é orientado");
+        }else{
+            System.out.println("é orientado");
+        }
     }
 }

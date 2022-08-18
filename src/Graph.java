@@ -54,4 +54,28 @@ public class Graph {
         }
         return maior;
     }
+    public float density(){
+        if(this.countNodes == 0){
+            System.err.println("adicione arestas ao grafo");
+            return -1;
+        }
+
+        return (this.countEdges)/(this.countNodes * (this.countNodes - 1));
+    }
+    public boolean oriented(){
+        boolean eVerdade = false;
+        for (int i = 0; i < this.adjmatrix.length; i++) {
+            for (int j = 0; j < this.adjmatrix[i].length; j++) {
+                if(this.adjmatrix[i][j] == this.adjmatrix[j][i]){
+                    eVerdade = true;
+                }else{
+                    return false;
+
+                }
+            }
+        }
+        return  eVerdade;
+
+    };
+
 }
