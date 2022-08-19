@@ -10,9 +10,9 @@ public class Main {
         g1.addEdge(3, 2, 1);
         System.out.println(g1);
         if(g1.oriented()){
-            System.out.println("não é orientado");
+            System.out.println(" é orientado");
         }else{
-            System.out.println("é orientado");
+            System.out.println("não é orientado");
         }
     }
 }

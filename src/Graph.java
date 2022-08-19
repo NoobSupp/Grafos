@@ -67,9 +67,9 @@ public class Graph {
         for (int i = 0; i < this.adjmatrix.length; i++) {
             for (int j = 0; j < this.adjmatrix[i].length; j++) {
                 if(this.adjmatrix[i][j] == this.adjmatrix[j][i]){
-                    eVerdade = true;
+                    eVerdade = false;
                 }else{
-                    return false;
+                    return true;
 
                 }
             }
