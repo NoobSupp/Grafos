@@ -2,7 +2,7 @@
 public class Main {
     public static void main(String[] args) {
 
-        Graph g1 = new Graph(4);
+        Graph g1 = new Graph(4, 'l');
         System.out.println(g1);
         g1.addEdge(0, 1, 1);
         g1.addEdge(1, 0, 1);
