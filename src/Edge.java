@@ -1,6 +1,6 @@
 public class Edge {
-   private int edge;
-   private int weight;
+   final private int edge;
+   final private int weight;
 
    Edge(int edge, int weight){
        this.edge = edge;
