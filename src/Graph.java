@@ -237,4 +237,8 @@ public class Graph {
         }
         return retorno;
     }
+    public boolean isConnected() {
+    return this.breadthFirstSearch(0).size() == this.countNodes;
+    }
+
 }

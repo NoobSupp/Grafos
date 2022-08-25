@@ -15,5 +15,6 @@ public class Main {
         System.out.println(g1.oriented());
         System.out.println(g1);
         System.out.println(g1.breadthFirstSearch(4));
+        System.out.println(g1.isConnected());
     }
 }
