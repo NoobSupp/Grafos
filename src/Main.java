@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
 
-        Graph g1 = new Graph(8, 'l');
+        Graph g1 = new Graph(8, 'm');
 
         g1.addEdgeUnorieted(1, 6, 1);
         g1.addEdgeUnorieted(0, 6, 1);

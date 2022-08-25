@@ -4,11 +4,11 @@ import java.util.ArrayList;
 public class Graph {
     final private int countNodes;
     private int countEdges;
-    private int[][] adjmatrix ;
+    private int[][] adjmatrix;
     private ArrayList<Edge>[] adjList;
     private char listaOuMatrix;
 
-    public Graph(int numNodes, char listaOuMatrix){
+    public Graph(int numNodes, char listaOuMatrix) {
         this.countNodes = numNodes;
         this.countEdges = 0;
 
@@ -31,8 +31,9 @@ public class Graph {
     public int getCountEdges() {
         return countEdges;
     }
+
     @Override
-    public String toString(){
+    public String toString() {
         String str = "";
         if (this.listaOuMatrix == 'm') {
             int[][] adjmatrix = this.adjmatrix;
@@ -43,68 +44,64 @@ public class Graph {
                 }
                 str += "\n";
             }
-        }
-        else{
+        } else {
             for (int i = 0; i < this.adjList.length; i++) {
-                str += "["+i+"]:\t";
+                str += "[" + i + "]:\t";
                 for (Edge edge : this.adjList[i]) {
-                    str += "("+edge.getEdge()+","+edge.getWeight()+"), ";
+                    str += "(" + edge.getEdge() + "," + edge.getWeight() + "), ";
                 }
-                str = str.substring(0,str.length()-2);
+                str = str.substring(0, str.length() - 2);
                 str += "\n";
             }
         }
         return str;
     }
-    public void addEdge(int u , int v, int w){
-        if(this.listaOuMatrix == 'm') {
-        if( u < 0 || u > this.adjmatrix.length - 1||
-            v<0|| v > this.adjmatrix.length - 1||
-            w <= 0
-        ){
-            System.err.println("aresta "+u+" "+v+" está invalida");
-            return;
-        }
+
+    public void addEdge(int u, int v, int w) {
+        if (this.listaOuMatrix == 'm') {
+            if (u < 0 || u > this.adjmatrix.length - 1 ||
+                    v < 0 || v > this.adjmatrix.length - 1 ||
+                    w <= 0
+            ) {
+                System.err.println("aresta " + u + " " + v + " está invalida");
+                return;
+            }
             this.adjmatrix[u][v] = w;
-        }
-        else
-        {
-        if( u < 0 || u > this.adjList.length - 1||
-                v<0|| v > this.adjList.length - 1||
-                w <= 0){
-            System.err.println("aresta "+u+" "+v+" está invalida");
-        }
-            this.adjList[u].add(new Edge(v,w));
+        } else {
+            if (u < 0 || u > this.adjList.length - 1 ||
+                    v < 0 || v > this.adjList.length - 1 ||
+                    w <= 0) {
+                System.err.println("aresta " + u + " " + v + " está invalida");
+            }
+            this.adjList[u].add(new Edge(v, w));
         }
         this.countEdges++;
     }
 
-    public void addEdgeUnorieted(int u, int v, int w){
-        if(this.listaOuMatrix == 'm') {
-            if( u < 0 || u > this.adjmatrix.length - 1||
-                    v<0|| v > this.adjmatrix.length - 1||
+    public void addEdgeUnorieted(int u, int v, int w) {
+        if (this.listaOuMatrix == 'm') {
+            if (u < 0 || u > this.adjmatrix.length - 1 ||
+                    v < 0 || v > this.adjmatrix.length - 1 ||
                     w <= 0
-            ){
-                System.err.println("aresta "+u+" "+v+" está invalida");
+            ) {
+                System.err.println("aresta " + u + " " + v + " está invalida");
                 return;
             }
             this.adjmatrix[u][v] = w;
             this.adjmatrix[v][u] = w;
-        }
-        else
-        {
-            if( u < 0 || u > this.adjList.length - 1||
-                    v<0|| v > this.adjList.length - 1||
-                    w <= 0){
-                System.err.println("aresta "+u+" "+v+" está invalida");
+        } else {
+            if (u < 0 || u > this.adjList.length - 1 ||
+                    v < 0 || v > this.adjList.length - 1 ||
+                    w <= 0) {
+                System.err.println("aresta " + u + " " + v + " está invalida");
             }
-            this.adjList[u].add(new Edge(v,w));
-            this.adjList[v].add(new Edge(u,w));
+            this.adjList[u].add(new Edge(v, w));
+            this.adjList[v].add(new Edge(u, w));
         }
-        this.countEdges+= 2;
+        this.countEdges += 2;
     }
 
-    public int degreee(int node){
+    public int degreee(int node) {
         int conta = 0;
         if (this.listaOuMatrix == 'm') {
 
@@ -118,16 +115,16 @@ public class Graph {
                 if (this.adjmatrix[node][i] > 0)
                     conta++;
             }
-        }
-        else{
-            if(node > this.adjList.length){
+        } else {
+            if (node > this.adjList.length) {
                 System.err.println("vertice escolhido é maior que o grafo");
             }
-           conta = this.adjList[node].size();
+            conta = this.adjList[node].size();
         }
         return conta;
     }
-    public int highestDegree(){
+
+    public int highestDegree() {
 
         int maior = this.degreee(0);
         int temp;
@@ -137,9 +134,8 @@ public class Graph {
                 if (temp > maior)
                     maior = temp;
             }
-        }
-        else{
-            for (int i = 0; i <this.adjList.length ; i++) {
+        } else {
+            for (int i = 0; i < this.adjList.length; i++) {
                 temp = this.degreee(i);
                 if (temp > maior)
                     maior = temp;
@@ -147,11 +143,13 @@ public class Graph {
         }
         return maior;
     }
-    public float density(){
 
-        return (this.countEdges)/(this.countNodes * (this.countNodes - 1));
+    public float density() {
+
+        return (this.countEdges) / (this.countNodes * (this.countNodes - 1));
     }
-    public boolean oriented(){
+
+    public boolean oriented() {
         boolean eVerdade = false;
         if (this.listaOuMatrix == 'm') {
             for (int i = 0; i < this.adjmatrix.length; i++) {
@@ -164,36 +162,44 @@ public class Graph {
                     }
                 }
             }
-        }
-        else
-        {
+        } else {
             //ta Errado
 
             int index = 0, j = 0;
-            for (int i = 0; i <this.adjList.length ; i++) {
-                for (Edge edge: this.adjList[i]) {
-                    for (Edge edge1: this.adjList[edge.getEdge()]) {
+            for (int i = 0; i < this.adjList.length; i++) {
+                for (Edge edge : this.adjList[i]) {
+                    for (Edge edge1 : this.adjList[edge.getEdge()]) {
                         if (edge1.getEdge() == edge.getEdge())
-                        index = j;
+                            index = j;
                         j++;
-                        }
-                    if(edge.getEdge() == this.adjList[edge.getEdge()].get(index).getEdge())
+                    }
+                    if (edge.getEdge() == this.adjList[edge.getEdge()].get(index).getEdge())
                         eVerdade = false;
                     else
                         return true;
-                    }
                 }
             }
+        }
 
-        return  eVerdade;
+        return eVerdade;
 
     }
-    ArrayList<Integer> breadthFirstSearch(int s){
-        if(this.listaOuMatrix == 'l') {
-            boolean[] descoberto = new boolean[this.countNodes];
-            ArrayList<Integer> queue = new ArrayList<>();
-            ArrayList<Integer> retorno = new ArrayList<>();
+    public ArrayList<Integer> edgeAdjList(int edge){
+        ArrayList<Integer>list = new ArrayList<>();
 
+        for (int i = 0; i <this.adjmatrix.length ; i++) {
+            if(this.adjmatrix[edge][i] != 0){
+                list.add(i);
+            }
+        }
+        return list;
+    }
+    public ArrayList<Integer> breadthFirstSearch(int s) {
+        boolean[] descoberto = new boolean[this.countNodes];
+        ArrayList<Integer> queue = new ArrayList<>();
+        ArrayList<Integer> retorno = new ArrayList<>();
+
+        if (this.listaOuMatrix == 'l') {
             queue.add(s);
             retorno.add(s);
             descoberto[s] = true;
@@ -209,15 +215,25 @@ public class Graph {
                     }
                 }
             }
-        }
-        else{
-            boolean[] descoberto = new boolean[this.countNodes];
-            ArrayList<Integer> queue = new ArrayList<>();
-            ArrayList<Integer> retorno = new ArrayList<>();
+        } else {
 
             queue.add(s);
             retorno.add(s);
-            descoberto[s]
+            descoberto[s] = true;
+
+            int priQ;
+            ArrayList<Integer> vAdjacenteAu;
+            while (queue.size() > 0) {
+                priQ = queue.remove(0);
+                vAdjacenteAu = this.edgeAdjList(priQ);
+                for (int edge : vAdjacenteAu) {
+                    if(!descoberto[edge]){
+                        queue.add(edge);
+                        retorno.add(edge);
+                        descoberto[edge] = true;
+                    }
+                }
+            }
         }
         return retorno;
     }
