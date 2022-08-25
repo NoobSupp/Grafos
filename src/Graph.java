@@ -79,6 +79,31 @@ public class Graph {
         this.countEdges++;
     }
 
+    public void addEdgeUnorieted(int u, int v, int w){
+        if(this.listaOuMatrix == 'm') {
+            if( u < 0 || u > this.adjmatrix.length - 1||
+                    v<0|| v > this.adjmatrix.length - 1||
+                    w <= 0
+            ){
+                System.err.println("aresta "+u+" "+v+" está invalida");
+                return;
+            }
+            this.adjmatrix[u][v] = w;
+            this.adjmatrix[v][u] = w;
+        }
+        else
+        {
+            if( u < 0 || u > this.adjList.length - 1||
+                    v<0|| v > this.adjList.length - 1||
+                    w <= 0){
+                System.err.println("aresta "+u+" "+v+" está invalida");
+            }
+            this.adjList[u].add(new Edge(v,w));
+            this.adjList[v].add(new Edge(u,w));
+        }
+        this.countEdges+= 2;
+    }
+
     public int degreee(int node){
         int conta = 0;
         if (this.listaOuMatrix == 'm') {
@@ -164,24 +189,35 @@ public class Graph {
 
     }
     ArrayList<Integer> breadthFirstSearch(int s){
-        boolean[] descoberto = new boolean[this.countNodes];
-        ArrayList<Integer> queue = new ArrayList<>();
-        ArrayList<Integer> retorno = new ArrayList<>();
+        if(this.listaOuMatrix == 'l') {
+            boolean[] descoberto = new boolean[this.countNodes];
+            ArrayList<Integer> queue = new ArrayList<>();
+            ArrayList<Integer> retorno = new ArrayList<>();
 
-        queue.add(s);
-        retorno.add(s);
-        descoberto[s] = true;
+            queue.add(s);
+            retorno.add(s);
+            descoberto[s] = true;
 
-        int priQ;
-        while (queue.size()>0){
-            priQ = queue.remove(0);
-            for (Edge edge: this.adjList[priQ]) {
-                if(!descoberto[edge.getEdge()]){
-                    queue.add(edge.getEdge());
-                    retorno.add(edge.getEdge());
-                    descoberto[edge.getEdge()] = true;
+            int priQ;
+            while (queue.size() > 0) {
+                priQ = queue.remove(0);
+                for (Edge edge : this.adjList[priQ]) {
+                    if (!descoberto[edge.getEdge()]) {
+                        queue.add(edge.getEdge());
+                        retorno.add(edge.getEdge());
+                        descoberto[edge.getEdge()] = true;
+                    }
                 }
             }
+        }
+        else{
+            boolean[] descoberto = new boolean[this.countNodes];
+            ArrayList<Integer> queue = new ArrayList<>();
+            ArrayList<Integer> retorno = new ArrayList<>();
+
+            queue.add(s);
+            retorno.add(s);
+            descoberto[s]
         }
         return retorno;
     }
