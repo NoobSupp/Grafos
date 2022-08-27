@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Stack;
 
 
 public class Graph {
@@ -241,4 +242,51 @@ public class Graph {
     return this.breadthFirstSearch(0).size() == this.countNodes;
     }
 
+    public int notDescAdj(int u, boolean[]desc){
+        for (Edge edge: this.adjList[u]) {
+            if (!desc[edge.getEdge()]){
+                return edge.getEdge();
+            }
+        }
+        return -1;
+    }
+
+    public ArrayList<Integer> depthFirstSearch(int inicio){
+        boolean[] descoberto = new boolean[this.countNodes];
+        Stack<Integer>pilha = new Stack<>();
+        ArrayList<Integer>retorno = new ArrayList<>();
+        int u;
+
+        pilha.add(inicio);
+        retorno.add(inicio);
+        descoberto[inicio] = true;
+        while (pilha.size()!=0){
+            u = pilha.peek();
+            int v = this.notDescAdj(u, descoberto);
+            if (v != -1){
+                pilha.add(v);
+                retorno.add(v);
+                descoberto[v]= true;
+            }
+            else
+            {
+                pilha.pop();
+            }
+
+        }
+        return retorno;
+    }
+
+    public ArrayList<Integer> dpsRecursive(int s){
+        boolean[]desc = new boolean[this.countNodes];
+        ArrayList<Integer> retorno = new ArrayList<>();
+
+        return retorno;
+    }
+
+    private void dfsRecursiveAux(int u, ArrayList<Integer>retorno, boolean[] descoberto){
+        descoberto[u] = true;
+        retorno.add(u);
+
+    }
 }
