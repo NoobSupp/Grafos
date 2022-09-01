@@ -1,6 +1,11 @@
+import java.io.IOError;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
-
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.BufferedReader;
 
 public class Graph {
     final private int countNodes;
@@ -27,6 +32,37 @@ public class Graph {
             }
             default -> System.err.println("erro ao escolher entre lista ou matrix de adjacencia");
         }
+    }
+
+    public Graph(String fileName,char listaOuMatriz)throws IOException {
+        this.listaOuMatrix = listaOuMatriz;
+        File file = new File(fileName);
+        FileReader reader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(reader);
+
+        // Read header
+        String[] line = bufferedReader.readLine().split(" ");
+        this.countNodes = (Integer.parseInt(line[0]));
+        int fileLines = (Integer.parseInt(line[1]));
+// Create and fill adjMatrix with read edges
+        if (this.listaOuMatrix == 'm')
+        this.adjmatrix = new int[this.countNodes][this.countNodes];
+        else {
+            this.adjList = new ArrayList[countNodes];
+            for (int i = 0; i < this.countNodes; i++) {
+                this.adjList[i] = new ArrayList<Edge>();
+            }
+        }
+        for (int i = 0; i < fileLines; ++i) {
+            String[] edgeInfo = bufferedReader.readLine().split(" ");
+            int source = Integer.parseInt(edgeInfo[0]);
+            int sink = Integer.parseInt(edgeInfo[1]);
+            int weight = Integer.parseInt(edgeInfo[2]);
+            addEdge(source, sink, weight);
+        }
+        bufferedReader.close();
+        reader.close();
+
     }
 
     public int getCountEdges() {
@@ -288,5 +324,28 @@ public class Graph {
         descoberto[u] = true;
         retorno.add(u);
 
-    }
+        }
+   public ArrayList<Integer> ordTopologica(){
+        boolean desc[] = new boolean[this.countNodes];
+        ArrayList<Integer> Retorno = new ArrayList<Integer>();
+
+       for (int i = 0; i <this.adjList.length ; i++) {
+           if(!desc[i]){
+               ordTopologicaAux(i,desc,Retorno);
+           }
+       }
+       return Retorno;
+   }
+   void ordTopologicaAux(int u, boolean[] desc, ArrayList<Integer> retorno){
+        desc[u] = true;
+
+       for (Edge edge: this.adjList[u]) {
+               if(!desc[edge.getEdge()]){
+                   ordTopologicaAux(edge.getEdge(),desc, retorno);
+
+               }
+
+       }
+       retorno.add(0,u);
+   }
 }
