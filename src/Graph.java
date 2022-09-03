@@ -348,4 +348,59 @@ public class Graph {
        }
        retorno.add(0,u);
    }
+   public ArrayList<Integer> connectedComp(){
+        int [] desc = new int[this.countNodes];
+        ArrayList<Integer> retorno = new ArrayList<>();
+        int comp = 0;
+
+       for (int i = 0; i < this.adjList.length ; i++) {
+           if(desc[i] == 0){
+               comp++;
+               connectedCompAux(i, desc, comp);
+           }
+       }
+       for (int i = 0; i < desc.length; i++) {
+           retorno.add(desc[i]);
+       }
+       return retorno;
+   }
+
+   private void connectedCompAux(int u, int[]desc, int comp){
+        desc[u] = comp;
+
+       for (Edge edge: this.adjList[u]
+            ) {
+           if(desc[edge.getEdge()] == 0)
+               connectedCompAux(edge.getEdge(),desc,comp);
+       }
+   }
+   private boolean hasCycleaux(int s){
+       boolean[] descoberto = new boolean[this.countNodes];
+       ArrayList<Integer> queue = new ArrayList<>();
+       ArrayList<Integer> retorno = new ArrayList<>();
+
+       queue.add(s);
+       retorno.add(s);
+       descoberto[s] = true;
+
+       int priQ;
+       while (queue.size() > 0) {
+           priQ = queue.remove(0);
+           for (Edge edge : this.adjList[priQ]) {
+               if (!descoberto[edge.getEdge()]) {
+                   queue.add(edge.getEdge());
+                   retorno.add(edge.getEdge());
+                   descoberto[edge.getEdge()] = true;
+               } else return true;
+           }
+       }
+       return false;
+   }
+   public boolean hasCycle(){
+       for (int i = 0; i < this.adjList.length; i++) {
+           if(this.hasCycleaux(i))
+               return true;
+       }
+        return false;
+   }
 }
